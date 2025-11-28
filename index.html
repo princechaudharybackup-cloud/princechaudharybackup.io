@@ -1,31 +1,811 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prince  Academy</title>
-    <!-- This links your CSS file -->
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prince Learning Academy | Ghaziabad</title>
+  <meta name="description" content="Prince Learning Academy - ICSE/CBSE coaching institute in Ghaziabad offering high-quality classes, tests, and mentorship for Classes 6 to 12.">
+  <style>
+    :root {
+      --primary: #1e88e5;
+      --primary-dark: #1565c0;
+      --accent: #ffb300;
+      --text: #333333;
+      --muted: #666666;
+      --bg: #f5f7fb;
+      --white: #ffffff;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Layout */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 800;
+      font-size: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-text span:first-child {
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.03em;
+    }
+
+    .brand-text span:last-child {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .nav-links a {
+      padding: 6px 0;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.2s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: none;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background: rgba(30, 136, 229, 0.08);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 40px 0 30px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 30px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(30, 136, 229, 0.06);
+      color: var(--primary-dark);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-size: 30px;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 18px;
+      max-width: 520px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .hero-meta {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-meta-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: rgba(21, 101, 192, 0.08);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: var(--primary-dark);
+    }
+
+    .hero-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 18px 16px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(30, 136, 229, 0.07), transparent 55%);
+      pointer-events: none;
+    }
+
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .hero-card-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .hero-card-pill {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(255, 179, 0, 0.16);
+      color: #8a5a00;
+      font-weight: 600;
+    }
+
+    .hero-card-list {
+      list-style: none;
+      margin-bottom: 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .hero-card-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .hero-card-bullet {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(30, 136, 229, 0.1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: var(--primary-dark);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .hero-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+    }
+
+    .hero-card-badge-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .hero-card-badge {
+      background: rgba(30, 136, 229, 0.08);
+      color: var(--primary-dark);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+
+    .hero-card-count {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* Sections */
+    section {
+      padding: 26px 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 420px;
+    }
+
+    .section-tagline {
+      font-size: 12px;
+      color: var(--primary-dark);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    /* Cards */
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      font-size: 13px;
+    }
+
+    .card-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      background: rgba(30, 136, 229, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .card-text {
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(30, 136, 229, 0.06);
+      color: var(--primary-dark);
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    /* Highlight section */
+    .highlight {
+      background: linear-gradient(135deg, rgba(30, 136, 229, 0.06), rgba(255, 179, 0, 0.08));
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .highlight-title {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .highlight-text {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .highlight-meta {
+      font-size: 12px;
+      color: var(--primary-dark);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .highlight-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .highlight-badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      font-size: 11px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .highlight-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--primary);
+    }
+
+    /* Testimonial & contact */
+    .testimonial {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 14px;
+    }
+
+    .testimonial::before {
+      content: "“";
+      position: absolute;
+      left: 0;
+      top: -10px;
+      font-size: 30px;
+      color: rgba(30, 136, 229, 0.25);
+    }
+
+    .testimonial-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .testimonial-role {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .contact-list {
+      list-style: none;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .contact-list li {
+      margin-bottom: 5px;
+    }
+
+    .contact-label {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 12px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+      margin-top: 18px;
+      padding: 12px 0 18px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .highlight {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 26px;
+      }
+
+      .hero h1 {
+        font-size: 24px;
+      }
+
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .highlight {
+        padding: 14px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        gap: 4px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- Navigation -->
+  <header>
+    <div class="container">
+      <nav class="nav">
+        <div class="brand">
+          <div class="brand-logo">P</div>
+          <div class="brand-text">
+            <span>Prince Learning Academy</span>
+            <span>Smart Coaching • Ghaziabad</span>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="#courses">Courses</a>
+          <a href="#features">Why Us</a>
+          <a href="#results">Results</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="nav-cta">
+          <button class="btn btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+            Call Back
+          </button>
+          <button class="btn btn-primary" onclick="document.getElementById('enquiry-form').scrollIntoView({behavior:'smooth'})">
+            Enquire Now →
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
 
-    <header>
-        <h1>Welcome to Prince Academy</h1>
-    </header>
+  <!-- Hero -->
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge">
+            <span class="badge-dot"></span>
+            ICSE • CBSE • Foundational Excellence
+          </div>
+          <h1>
+            Helping students score
+            <span>high marks</span> with concept‑focused learning.
+          </h1>
+          <p class="hero-subtitle">
+            Prince Learning Academy is a Ghaziabad‑based coaching institute focused on strong basics, structured practice, and regular assessments for Classes 6 to 10 (all subjects) and Classes 11–12 (select streams).
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})">
+              View Courses
+            </button>
+            <button class="btn btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+              Talk to Counsellor
+            </button>
+          </div>
+          <div class="hero-meta">
+            <span>
+              <span class="hero-meta-icon">★</span>
+              Small batch size (10–15 students)
+            </span>
+            <span>
+              <span class="hero-meta-icon">✓</span>
+              Weekly tests & detailed feedback
+            </span>
+          </div>
+        </div>
 
-    <main>
-        <section id="about">
-            <h2>About Us</h2>
-            <p>Your trusted partn education for Class 9 and 10.</p>
-        </section>
+        <aside class="hero-card" aria-label="Quick overview">
+          <div class="hero-card-header">
+            <div>
+              <div class="hero-card-title">Admissions Open – 2025–26</div>
+              <div style="font-size: 11px; color: var(--muted);">
+                Limited seats for foundation & board batches
+              </div>
+            </div>
+            <span class="hero-card-pill">Book a free demo</span>
+          </div>
+          <ul class="hero-card-list">
+            <li>
+              <span class="hero-card-bullet">1</span>
+              <span>Personalised attention with clear doubt‑solving after every class.</span>
+            </li>
+            <li>
+              <span class="hero-card-bullet">2</span>
+              <span>Structured notes, question banks, and periodic revision tests.</span>
+            </li>
+            <li>
+              <span class="hero-card-bullet">3</span>
+              <span>Parent updates on performance and attendance through regular reports.</span>
+            </li>
+          </ul>
+          <div class="hero-card-footer">
+            <div class="hero-card-badge-row">
+              <span class="hero-card-badge">Class 6–10</span>
+              <span class="hero-card-badge">Boards & Olympiads</span>
+            </div>
+            <div class="hero-card-count">
+              Call / WhatsApp: <strong>+91-XXXXXXXXXX</strong>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
 
-        <section id="interactive-section">
-            <h3 id="message">Click the button for amessage!</h3>
-            <button id="actionButton">Show Message</button>
-        </section>
-    </main>
+    <!-- Courses -->
+    <section id="courses">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="section-tagline">Courses</div>
+            <h2 class="section-title">Courses at Prince Learning Academy</h2>
+          </div>
+          <p class="section-subtitle">
+            Concept‑oriented coaching for school curriculum and competitive foundations with a balance of theory, practice questions, and tests.
+          </p>
+        </div>
 
-    <!-- This links your JavaScript file -->
-    <script src="script.js"></script>
-</body>
-</html>
+        <div class="grid grid-3">
+          <article class="card">
+            <div class="card-icon">6–8</div>
+            <h3 class="card-title">Junior Foundation (Classes 6–8)</h3>
+            <p class="card-text">
+              Strong focus on basics in Mathematics, Science, and English with regular worksheets and class‑tests.
+            </p>
+            <span class="pill">Board + Olympiad basics</span>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">9–10</div>
+            <h3 class="card-title">Board Booster (Classes 9–10)</h3>
+            <p class="card-text">
+              Intensive course for ICSE/CBSE boards with chapter‑wise tests, sample paper practice, and doubt sessions.
+            </p>
+            <span class="pill">Pre‑boards & full syllabus tests</span>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">XI–XII</div>
+            <h3 class="card-title">Senior Classes (XI–XII)</h3>
+            <p class="card-text">
+              Selected subjects (e.g. Mathematics, Physics, Chemistry, Accounts) with focus on concepts and numerical practice.
+            </p>
+            <span class="pill">Stream‑wise batches</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features / Why Us -->
+    <section id="features">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="section-tagline">Why choose us</div>
+            <h2 class="section-title">What makes learning effective</h2>
+          </div>
+          <p class="section-subtitle">
+            The academy combines disciplined classroom teaching, digital support, and regular analytics‑based feedback to improve scores steadily.
+          </p>
+        </div>
+
+        <div class="grid grid-3">
+          <article class="card">
+            <div class="card-icon">📚</div>
+            <h3 class="card-title">Concept‑first teaching</h3>
+            <p class="card-text">
+              Every topic starts from the basics with plenty of solved examples so that students understand “why”, not just “how”.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">📝</div>
+            <h3 class="card-title">Weekly tests & analysis</h3>
+            <p class="card-text">
+              Topic‑wise, monthly, and full‑syllabus tests with detailed performance reports shared with parents.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">👨‍🏫</div>
+            <h3 class="card-title">Small, focused batches</h3>
+            <p class="card-text">
+              Small batch sizes ensure every learner gets attention, frequent doubt clearing, and personalised guidance.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">💻</div>
+            <h3 class="card-title">Digital support</h3>
+            <p class="card-text">
+              Recorded explanations (where available), PDF notes, and online practice support students between classes.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">🤝</div>
+            <h3 class="card-title">Parent connect</h3>
+            <p class="card-text">
+              Regular parent meetings and performance updates keep families aligned with each child’s academic journey.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">🎯</div>
+            <h3 class="card-title">Exam‑oriented strategy</h3>
+            <p class="card-text">
+              Time‑management, question selection, and paper‑presentation tips are integrated into classroom teaching.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results / Highlight -->
+    <sec
