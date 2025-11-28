@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prince Learning Academy - Student Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #005A9C;
+            --secondary-color: #003A65;
+            --background-color: #f4f7fc;
+            --container-bg: #ffffff;
+            --text-color: #333;
+            --border-color: #e0e0e0;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #fd7e14;
+        }
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 950px;
+            background-color: var(--container-bg);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 90, 156, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        .header h1 { margin: 0; font-size: 28px; font-weight: 700; }
+        .content { padding: 30px; }
+        
+        #login-form { max-width: 400px; margin: 40px auto; }
+        #login-form h2 { text-align: center; color: var(--primary-color); margin-bottom: 25px; font-weight: 600; }
+        #login-form input { width: 100%; box-sizing: border-box; padding: 14px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 16px; margin-bottom: 15px; }
+        #login-form button { width: 100%; padding: 14px; background-color: var(--primary-color); color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; transition: background-color 0.3s; font-weight: 600; }
+        #login-form button:hover { background-color: var(--secondary-color); }
+        #error-message { color: var(--danger-color); text-align: center; margin-top: 15px; display: none; font-weight: 500; }
+        
+        #student-portal { display: none; }
+        
+        .section { margin-bottom: 35px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px; }
+        .section-header h3 { color: var(--primary-color); margin: 0; font-size: 22px; font-weight: 600; }
+        
+        #fee-payment-section { background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-top: 20px; border: 1px solid var(--border-color); }
+        #fee-payment-section .fee-details { display: flex; justify-content: space-between; align-items: center; }
+        #fee-payment-section label { font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+        #nov-fee-checkbox { transform: scale(1.3); }
+        #pay-now-button { padding: 10px 25px; font-size: 16px; background-color: var(--success-color); color: white; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.3s; font-weight: 600; }
+        #pay-now-button:hover { background-color: #218838; }
+
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 14px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #f8f9fa; font-weight: 600; color: var(--secondary-color); }
+        .paid { color: var(--success-color); font-weight: bold; }
+        .due { color: var(--danger-color); font-weight: bold; }
+        .partial { color: var(--warning-color); font-weight: bold; }
+        
+        #printable-report-card { border: 2px solid var(--border-color); padding: 25px; border-radius: 12px; background: white; }
+        .report-header { text-align: center; margin-bottom: 25px; border-bottom: 2px solid var(--border-color); padding-bottom: 20px; }
+        .report-header h2 { margin: 0; color: var(--primary-color); font-size: 26px; font-weight: 700; letter-spacing: 1px; }
+        .report-header p { margin: 5px 0; color: #555; font-size: 16px; }
+
+        .student-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 25px 0; padding: 20px; background-color: #f8f9fa; border-radius: 8px; }
+        .student-info-grid div { font-size: 15px; }
+        .student-info-grid strong { color: var(--secondary-color); }
+        #report-card-table th { font-size: 14px; }
+        #report-card-table td { font-size: 14px; }
+        #report-card-table .grade { font-weight: bold; text-align: center; }
+
+        .report-summary { margin-top: 25px; padding: 20px; background-color: var(--primary-color); color: white; border-radius: 8px; display: flex; justify-content: space-around; text-align: center; }
+        .summary-item h4 { margin: 0 0 5px 0; font-size: 14px; font-weight: 400; opacity: 0.9; text-transform: uppercase; }
+        .summary-item p { margin: 0; font-size: 22px; font-weight: 700; }
+        
+        .report-footer { margin-top: 30px; display: flex; justify-content: space-between; align-items: flex-end; padding-top: 20px; border-top: 1px solid var(--border-color); }
+        .report-footer .remarks p { margin: 0; font-style: italic; color: #555; }
+        .report-footer .signature { text-align: center; padding-top: 40px; }
+        .report-footer .signature p { border-top: 1px solid #999; padding-top: 8px; margin: 0; font-weight: 600; color: var(--secondary-color); }
+        
+        .portal-buttons { display: flex; justify-content: center; gap: 20px; margin-top: 30px; }
+        .portal-button { padding: 12px 25px; color: white; border: none; border-radius: 8px; text-align: center; cursor: pointer; transition: background-color 0.3s; font-size: 16px; font-weight: 600; }
+        .print-button { background-color: var(--primary-color); }
+        .print-button:hover { background-color: var(--secondary-color); }
+        #logout-button { background-color: var(--danger-color); }
+        #logout-button:hover { background-color: #c82333; }
+
+        @media print {
+            body, .container { margin: 0; padding: 0; box-shadow: none; }
+            .content { padding: 0; }
+            body * { visibility: hidden; }
+            #printable-report-card, #printable-report-card * { visibility: visible; }
+            #printable-report-card { position: absolute; left: 0; top: 0; width: 100%; border: none; border-radius: 0; }
+            .report-summary { background-color: #005A9C !important; -webkit-print-color-adjust: exact; color-adjust: exact; color: white !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header"><h1>Prince Learning Academy</h1></div>
+        <div class="content">
+            <div id="login-form">
+                <h2>Student Portal Login</h2>
+                <input type="text" id="uniqueId" placeholder="Enter Unique ID">
+                <input type="password" id="password" placeholder="Enter Password">
+                <button onclick="handleLogin()">Login</button>
+                <p id="error-message">Invalid credentials. Please try again.</p>
+            </div>
+
+            <div id="student-portal">
+                <div class="section">
+                    <div class="section-header"><h3>Fee Ledger</h3></div>
+                    <table id="fee-ledger-table">
+                        <thead><tr><th>Month</th><th>Status</th><th>Due Amount</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                    <div id="fee-payment-section"></div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header"><h3>Academic Performance Report</h3></div>
+                    <div id="printable-report-card">
+                        <div class="report-header">
+                            <h2>PRINCE LEARNING ACADEMY</h2>
+                            <p>Academic Session: 2025-2026</p>
+                        </div>
+                        <div class="student-info-grid">
+                            <div><strong>Student Name:</strong> <span id="report-student-name"></span></div>
+                            <div><strong>Class:</strong> <span id="report-student-class"></span></div>
+                            <div><strong>Unique ID:</strong> <span id="report-unique-id"></span></div>
+                            <div><strong>Roll No:</strong> <span id="report-roll-no"></span></div>
+                            <div><strong>Date of Birth:</strong> <span id="report-dob"></span></div>
+                        </div>
+                        <table id="report-card-table">
+                            <thead><tr><th>Assessment / Subject</th><th>Marks Obtained</th><th>Max Marks</th><th>Percentage</th><th>Grade</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class="report-summary">
+                            <div class="summary-item"><h4>Total Marks</h4><p id="total-marks"></p></div>
+                            <div class="summary-item"><h4>Overall Percentage</h4><p id="overall-percentage"></p></div>
+                            <div class="summary-item"><h4>Overall Grade</h4><p id="overall-grade"></p></div>
+                        </div>
+                        <div class="report-footer">
+                            <div class="remarks">
+                                <p><strong>Teacher's Remarks:</strong> <span id="teacher-remark"></span></p>
+                            </div>
+                            <div class="signature">
+                                <p>Principal's Signature</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="portal-buttons">
+                    <button class="portal-button print-button" onclick="window.print()">Print Report</button>
+                    <button class="portal-button" id="logout-button" onclick="handleLogout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const studentDatabase = {
+            "1": { password: "A1", name: "Devansh", class: "K.G", feePerMonth: 500, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: { "Hindi CT 1 (11 Oct)": "4/6", "Hindi CT 2 (18 Oct)": "4/10", "Hindi CT 3 (25 Oct)": "6/6" } },
+            "9": { password: "A9", name: "Rudransh", class: "K.G", feePerMonth: 500, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "Due", due: 500 }, "October": { status: "Due", due: 500 } }, reportCard: {} },
+            "30": { password: "A12", name: "Yashi", class: "K.G", feePerMonth: 500, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: {} },
+            "5": { password: "A5", name: "Mahi", class: "2", feePerMonth: 800, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "Due", due: 800 }, "September": { status: "Due", due: 800 }, "October": { status: "Due", due: 800 } }, reportCard: { "EVS CT 2 (11 Oct)": "N/A", "Eng CT 1 (18 Oct)": "N/A", "Hindi CT 1 (25 Oct)": "N/A" } },
+            "7": { password: "A7", name: "Rachit", class: "2", feePerMonth: 800, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: { "Test 1": "9/10", "Test 2": "10/10", "Test 3": "6/8" } },
+            "29": { password: "A11", name: "Vanshika", class: "2", feePerMonth: 800, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: {} },
+            "4": { password: "A4", name: "Kriyansh", class: "3", feePerMonth: 1500, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "Partial", due: 0 } }, reportCard: {} }, // October due is 0 in PDF
+            "6": { password: "A6", name: "Nipun", class: "3", feePerMonth: 1500, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: {} },
+            "28": { password: "A10", name: "Shristi", class: "3", feePerMonth: 1000, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "Due", due: 600 }, "October": { status: "Due", due: 1000 } }, reportCard: {} },
+            "2": { password: "A2", name: "Diksha", class: "4", feePerMonth: 600, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: { "Math CT 1 (11 Oct)": "14/15", "SST CT 1 (18 Oct)": "10/10", "Math CT 2 (25 Oct)": "5/5" } },
+            "3": { password: "A3", name: "Gauri", class: "4", feePerMonth: 1500, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: {} },
+            "32": { password: "A13", name: "Soumiya Verma", class: "5", feePerMonth: 1000, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: { "Science CT 1 (15 Oct)": "9/10", "Science CT 2 (16 Oct)": "8/10", "Math CT 1 (25 Oct)": "5/10" } },
+            "12": { password: "B3", name: "Devansh", class: "6", feePerMonth: 1500, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: { "Math CT 1 (17 Oct)": "20/20", "English Lang CT 1 (17 Oct)": "20/20" } },
+            "13": { password: "B4", name: "Mayank", class: "6", feePerMonth: 1500, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: { "Math CT 1 (17 Oct)": "16/20", "English Lang CT 1 (17 Oct)": "14/20" } },
+            "10": { password: "B1", name: "Bhumika", class: "8", feePerMonth: 1500, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: { "Biology CT 1 (18 Oct)": "15/20" } },
+            "14": { password: "B6", name: "Radhika", class: "8", feePerMonth: 1500, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "Due", due: 600 }, "October": { status: "Due", due: 1500 } }, reportCard: { "Biology CT 1 (18 Oct)": "17/20" } },
+            "16": { password: "C1", name: "Aanvi", class: "9", feePerMonth: 600, dob: "09-06-2011", fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: { "Computer Apps CT 1 (18 Oct)": "24/40", "English Lit. CT 1 (18 Oct)": "8/10" } },
+            "17": { password: "C2", name: "Aaryan", class: "9", feePerMonth: 1350, dob: "02-01-2011", fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "Partial", due: 727 } }, reportCard: { "Computer Apps CT 1 (18 Oct)": "26/40" } },
+            "18": { password: "C3", name: "Dev Chaudhary", class: "9", feePerMonth: 1350, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: {} },
+            "19": { password: "C4", name: "Vansh Khatri", class: "9", feePerMonth: 1350, dob: "20-09-2010", fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "Partial", due: 50 } }, reportCard: { "Computer Apps CT 1 (18 Oct)": "14/40" } },
+            "20": { password: "C5", name: "Vanshika Sharma", class: "9", feePerMonth: 600, dob: "30-03-2011", fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: {} },
+            "21": { password: "C6", name: "Vinnet Raj Singh", class: "9", feePerMonth: 1350, dob: "13-12-2012", fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: {} },
+            "31": { password: "C7", name: "Angila Rohila", class: "9", feePerMonth: 2000, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: {} },
+            "33": { password: "C8", name: "Avyan Pal", class: "9", feePerMonth: 1350, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: {} },
+            "22": { password: "D1", name: "Aaditya Vats", class: "10", feePerMonth: 800, fees: { "July": { status: "PAID", due: 0 }, "August": { status: "PAID", due: 0 }, "September": { status: "PAID", due: 0 }, "October": { status: "PAID", due: 0 } }, reportCard: { "English Lit. CT 1": "N/A", "English Lang. CT 1": "N/A" } }
+        };
+
+        const teacherRemarks = ["Excellent grasp of concepts and shows great potential.", "Consistently submits high-quality work. Keep it up!", "A very diligent and hard-working student. A pleasure to have in class.", "Actively participates in discussions and contributes positively.", "Needs to focus on submitting assignments on time.", "Shows strong improvement, especially in challenging topics.", "A creative thinker who brings unique perspectives to the table.", "Should practice more to improve accuracy in calculations.", "Has a strong foundation and is ready for more advanced concepts.", "Good effort, but needs to work on concentration during class."];
+
+        let currentStudent = null;
+
+        function getGrade(percentage) {
+            if (percentage >= 90) return 'A+'; if (percentage >= 80) return 'A'; if (percentage >= 70) return 'B';
+            if (percentage >= 60) return 'C'; if (percentage >= 50) return 'D'; return 'E';
+        }
+
+        function handleLogin() {
+            const uniqueId = document.getElementById('uniqueId').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const student = studentDatabase[uniqueId];
+            if (student && student.password === password) {
+                currentStudent = { ...student, uniqueId };
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('student-portal').style.display = 'block';
+                document.getElementById('error-message').style.display = 'none';
+                populatePortal(currentStudent);
+            } else {
+                document.getElementById('error-message').style.display = 'block';
+            }
+        }
+
+        function populatePortal(student) {
+            populateFeeLedger(student);
+            populateReportCard(student);
+        }
+
+        function populateFeeLedger(student) {
+            const feeTable = document.getElementById('fee-ledger-table').getElementsByTagName('tbody')[0];
+            feeTable.innerHTML = '';
+            
+            // Add November fee to the ledger if not present
+            if (!student.fees["November"]) {
+                student.fees["November"] = { status: "Due", due: student.feePerMonth };
+            }
+
+            for (const month in student.fees) {
+                const { status, due } = student.fees[month];
+                feeTable.insertRow().innerHTML = `<td>${month}</td><td><span class="${status.toLowerCase()}">${status}</span></td><td>${due > 0 ? `₹${due}` : '-'}</td>`;
+            }
+
+            const paymentSection = document.getElementById('fee-payment-section');
+            const novFeeRecord = student.fees["November"];
+            const isNovPaid = novFeeRecord && novFeeRecord.status === 'PAID';
+
+            if (!isNovPaid && novFeeRecord) {
+                paymentSection.style.display = 'block';
+                paymentSection.innerHTML = `<div class="fee-details"><label><input type="checkbox" id="nov-fee-checkbox" checked> Pay November Fee: <strong>₹${novFeeRecord.due}</strong></label><button id="pay-now-button" onclick="handlePayment(${novFeeRecord.due})">Pay Now</button></div>`;
+            } else {
+                paymentSection.style.display = 'none';
+            }
+        }
+
+        function populateReportCard(student) {
+            document.getElementById('report-student-name').innerText = student.name;
+            document.getElementById('report-student-class').innerText = student.class;
+            document.getElementById('report-unique-id').innerText = student.uniqueId;
+            document.getElementById('report-roll-no').innerText = student.password;
+            document.getElementById('report-dob').innerText = student.dob || 'N/A';
+            document.getElementById('teacher-remark').innerText = student.remark || teacherRemarks[parseInt(student.uniqueId) % teacherRemarks.length];
+
+            const reportTable = document.getElementById('report-card-table').getElementsByTagName('tbody')[0];
+            reportTable.innerHTML = '';
+            let totalObtained = 0, totalMax = 0;
+
+            if (Object.keys(student.reportCard).length > 0) {
+                for (const test in student.reportCard) {
+                    const score = student.reportCard[test];
+                    if (score !== "N/A" && score.includes('/')) {
+                        const [obtained, max] = score.split('/').map(Number);
+                        const percentage = max > 0 ? ((obtained / max) * 100).toFixed(1) : 0;
+                        const grade = getGrade(percentage);
+                        reportTable.insertRow().innerHTML = `<td>${test}</td><td>${obtained}</td><td>${max}</td><td>${percentage}%</td><td class="grade">${grade}</td>`;
+                        totalObtained += obtained;
+                        totalMax += max;
+                    } else {
+                        reportTable.insertRow().innerHTML = `<td>${test}</td><td>N/A</td><td>N/A</td><td>-</td><td class="grade">-</td>`;
+                    }
+                }
+            } else {
+                reportTable.innerHTML = '<tr><td colspan="5" style="text-align:center;">No performance data available.</td></tr>';
+            }
+
+            document.getElementById('total-marks').innerText = `${totalObtained} / ${totalMax}`;
+            if (totalMax > 0) {
+                const overallPercentage = ((totalObtained / totalMax) * 100).toFixed(1);
+                document.getElementById('overall-percentage').innerText = `${overallPercentage}%`;
+                document.getElementById('overall-grade').innerText = getGrade(overallPercentage);
+            } else {
+                document.getElementById('overall-percentage').innerText = 'N/A';
+                document.getElementById('overall-grade').innerText = 'N/A';
+            }
+        }
+
+        function handlePayment(amount) {
+            if (!document.getElementById('nov-fee-checkbox').checked) {
+                alert("Please check the box to confirm payment.");
+                return;
+            }
+            const upiId = "7310680106@fam";
+            const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent("Prince Learning Academy")}&am=${amount}&cu=INR&tn=${encodeURIComponent(`Fee for ${currentStudent.name}`)}`;
+            window.location.href = upiUrl;
+        }
+
+        function handleLogout() {
+            currentStudent = null;
+            document.getElementById('student-portal').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('uniqueId').value = '';
+            document.getElementById('password').value = '';
+        }
+    </script>
+</body>
+</html>
