@@ -1,45 +1,524 @@
-/* style.css */
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+/* ===========================================
+   PRINCE LEARNING ACADEMY - STUDENT PORTAL
+   Professional CSS Design System
+   =========================================== */
+
+/* CSS Custom Properties (Root Variables) */
+:root {
+    --primary-color: #005A9C;
+    --secondary-color: #003A65;
+    --background-color: #f4f7fc;
+    --container-bg: #ffffff;
+    --text-color: #333;
+    --border-color: #e0e0e0;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #fd7e14;
+    
+    /* Typography */
+    --font-primary: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-size-base: 16px;
+    --font-weight-light: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 20px;
+    --spacing-xl: 24px;
+    --spacing-2xl: 32px;
 }
 
-header {
-    background-color: #005a87;
-    color: #ffffff;
-    padding: 1rem 0;
+/* Base Styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: var(--spacing-xl);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+/* Main Container */
+.container {
+    width: 100%;
+    max-width: 950px;
+    background-color: var(--container-bg);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 90, 156, 0.1);
+    overflow: hidden;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 25px;
     text-align: center;
 }
 
-main {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
+.header h1 {
+    margin: 0;
+    font-size: clamp(24px, 4vw, 28px);
+    font-weight: var(--font-weight-bold);
 }
 
-section {
-    background: #ffffff;
-    padding: 20px;
-    margin-bottom: 20px;
+/* Content Area */
+.content {
+    padding: 30px;
+}
+
+/* Login Form */
+#login-form {
+    max-width: 400px;
+    margin: 40px auto;
+}
+
+#login-form h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    font-weight: var(--font-weight-semibold);
+}
+
+#login-form input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-size: 16px;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-button {
-    display: inline-block;
-    background: #007BFF;
-    color: #fff;
-    padding: 10px 20px;
+#login-form input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 90, 156, 0.1);
+}
+
+#login-form button {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--primary-color);
+    color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 18px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: var(--font-weight-semibold);
+}
+
+#login-form button:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 90, 156, 0.3);
+}
+
+#login-form button:active {
+    transform: translateY(0);
+}
+
+#error-message {
+    color: var(--danger-color);
+    text-align: center;
+    margin-top: 15px;
+    display: none;
+    font-weight: var(--font-weight-medium);
+}
+
+/* Student Portal */
+#student-portal {
+    display: none;
+}
+
+/* Sections */
+.section {
+    margin-bottom: 35px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.section-header h3 {
+    color: var(--primary-color);
+    margin: 0;
+    font-size: 22px;
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Fee Payment Section */
+#fee-payment-section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    border: 1px solid var(--border-color);
+}
+
+#fee-payment-section .fee-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+#fee-payment-section label {
+    font-size: 18px;
+    font-weight: var(--font-weight-medium);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+#nov-fee-checkbox {
+    transform: scale(1.3);
+    accent-color: var(--success-color);
+}
+
+#pay-now-button {
+    padding: 10px 25px;
+    font-size: 16px;
+    background-color: var(--success-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: var(--font-weight-semibold);
+}
+
+#pay-now-button:hover {
+    background-color: #218838;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+th, td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: var(--font-weight-semibold);
+    color: var(--secondary-color);
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+tr:hover {
+    background-color: #f8f9fa;
+}
+
+.paid {
+    color: var(--success-color);
+    font-weight: var(--font-weight-bold);
+}
+
+.due {
+    color: var(--danger-color);
+    font-weight: var(--font-weight-bold);
+}
+
+.partial {
+    color: var(--warning-color);
+    font-weight: var(--font-weight-bold);
+}
+
+/* Report Card */
+#printable-report-card {
+    border: 2px solid var(--border-color);
+    padding: 25px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.report-header {
+    text-align: center;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 20px;
+}
+
+.report-header h2 {
+    margin: 0;
+    color: var(--primary-color);
+    font-size: 26px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 1px;
+}
+
+.report-header p {
+    margin: 5px 0;
+    color: #555;
     font-size: 16px;
 }
 
-button:hover {
-    background: #0056b3;
+.student-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin: 25px 0;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.student-info-grid div {
+    font-size: 15px;
+}
+
+.student-info-grid strong {
+    color: var(--secondary-color);
+}
+
+#report-card-table th {
+    font-size: 14px;
+}
+
+#report-card-table td {
+    font-size: 14px;
+}
+
+#report-card-table .grade {
+    font-weight: var(--font-weight-bold);
+    text-align: center;
+    font-size: 16px;
+    min-width: 60px;
+}
+
+/* Report Summary */
+.report-summary {
+    margin-top: 25px;
+    padding: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.summary-item {
+    flex: 1;
+}
+
+.summary-item h4 {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    font-weight: var(--font-weight-light);
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.summary-item p {
+    margin: 0;
+    font-size: 22px;
+    font-weight: var(--font-weight-bold);
+}
+
+/* Report Footer */
+.report-footer {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    gap: 20px;
+}
+
+.report-footer .remarks p {
+    margin: 0;
+    font-style: italic;
+    color: #555;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.report-footer .signature {
+    text-align: center;
+    padding-top: 40px;
+    flex: 1;
+}
+
+.report-footer .signature p {
+    border-top: 1px solid #999;
+    padding-top: 8px;
+    margin: 0;
+    font-weight: var(--font-weight-semibold);
+    color: var(--secondary-color);
+}
+
+/* Portal Buttons */
+.portal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.portal-button {
+    padding: 12px 25px;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-weight: var(--font-weight-semibold);
+    min-width: 140px;
+}
+
+.print-button {
+    background-color: var(--primary-color);
+}
+
+.print-button:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 90, 156, 0.3);
+}
+
+#logout-button {
+    background-color: var(--danger-color);
+}
+
+#logout-button:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.3);
+}
+
+/* Print Styles */
+@media print {
+    body, .container {
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+    }
+    
+    .content {
+        padding: 0;
+    }
+    
+    body * {
+        visibility: hidden;
+    }
+    
+    #printable-report-card, #printable-report-card * {
+        visibility: visible;
+    }
+    
+    #printable-report-card {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+    
+    .report-summary {
+        background-color: #005A9C !important;
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+        color: white !important;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
+    .container {
+        border-radius: 12px;
+        margin: 10px;
+    }
+    
+    .content {
+        padding: 20px;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .fee-details {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .report-footer {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .portal-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .portal-button {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .student-info-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    #report-card-table {
+        font-size: 14px;
+    }
+    
+    th, td {
+        padding: 10px 8px;
+    }
 }
