@@ -1,40 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prince Learning Academy | Ghaziabad</title>
-  <meta name="description" content="Prince Learning Academy - ICSE/CBSE coaching institute in Ghaziabad offering high-quality classes, tests, and mentorship for Classes 6 to 12.">
-  <style>
-    :root {
-      --primary: #1e88e5;
-      --primary-dark: #1565c0;
-      --accent: #ffb300;
-      --text: #333333;
-      --muted: #666666;
-      --bg: #f5f7fb;
-      --white: #ffffff;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }
+    <meta charset="UTF-8">
+    <title>Prince Learning Academy Student Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { background: #f4f6fd; font-family: 'Segoe UI', sans-serif;}
+        header { text-align: center; margin: 40px 0 16px 0; }
+        .login-box, .admit-card { margin: 0 auto; padding: 24px; background: #fff; border-radius: 12px; max-width: 370px; box-shadow: 0 0 20px rgba(50,50,150,0.09);}
+        .login-box input {width: 95%; padding: 10px; margin: 8px 0 20px 0; border-radius: 7px; border: 1px solid #dadbe6;}
+        .login-btn {background: #304ffe; color: white; border:none; border-radius:7px; font-size: 17px; padding:10px 22px; cursor:pointer; transition:0.2s;}
+        .login-btn:hover {background:#1e40af;}
+        .hidden {display:none;}
+        .admit-card { text-align: left;}
+        .admit-card h2 {color: #23378d;}
+        .print-btn {background: #00c853; color: white; border: none; border-radius: 7px; font-size: 15px; padding:9px 18px; margin-top:20px; cursor:pointer;}
+        .admit-table {width: 100%; border-collapse: collapse; margin-top:15px;}
+        .admit-table th, .admit-table td {padding: 7px 10px; border-bottom: 1px solid #e7e8ed;}
+        .admit-table th {background: #eee; font-weight: 600;}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Prince Learning Academy</h1>
+        <h3>Student Login - Sessional 1 Admit Card</h3>
+    </header>
+    <div class="login-box" id="loginBox">
+        <form id="loginForm" autocomplete="off">
+            <label>Unique ID:</label><br>
+            <input type="text" id="uniqueid" placeholder="Enter Unique ID..." required><br>
+            <label>Roll No.:</label><br>
+            <input type="text" id="rollno" placeholder="Enter Roll Number..." required><br>
+            <button class="login-btn" type="submit">Login</button>
+        </form>
+        <p id="errorMsg" style="color:red;display:none;"></p>
+    </div>
+    <div class="admit-card hidden" id="admitCardBox">
+        <h2>Sessional 1 Examination Admit Card</h2>
+        <table class="admit-table">
+            <tr><th>Name</th><td id="admitName"></td></tr>
+            <tr><th>Class</th><td id="admitClass"></td></tr>
+            <tr><th>Roll Number</th><td id="admitRoll"></td></tr>
+            <tr><th>Session</th><td>Sessional 1</td></tr>
+            <tr><th>Date</th><td>November 2025</td></tr>
+        </table>
+        <h3 style="margin-top:27px;">Examination Subjects:</h3>
+        <ul id="subjectList"></ul>
+        <button class="print-btn" onclick="window.print()">Print Admit Card</button>
+    </div>
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
+    <script>
+    // Replace this student data array with real data; based on image "Fee Ledger" structure
+    const students = [
+        // { uniqueId: '1', password: '1', class: 'KG', name: 'Devansh' },
+        // { uniqueId: '2', password: '2', class: 'KG', name: 'Rudransh' },
+        // ... (continue for all students)
+        { uniqueId: '19', password: 'C4', class: '9', name: 'Dev Chaudhary' },
+        { uniqueId: '20', password: 'C4', class: '9', name: 'Vansh Khatri' },
+        { uniqueId: '21', password: 'C5', class: '9', name: 'Vanshika Sharma' },
+        { uniqueId: '22', password: 'C6', class: '9', name: 'Vineet Raj Singh' },
+        { uniqueId: '23', password: 'C7', class: '9', name: 'Angita Rohilla' },
+        { uniqueId: '24', password: 'D1', class: '10', name: 'Aryan Pal' },
+        { uniqueId: '25', password: 'D1', class: '10', name: 'Aadiya Vats' },
+        // Add more students here
+    ];
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-    }
+    // Subjects mapping for classes
+    const subjects = {
+        'KG': ['English', 'Maths', 'EVS'],
+        '1': ['English', 'Maths', 'EVS', 'Drawing'],
+        '2': ['English', 'Maths', 'EVS', 'Computer'],
+        '3': ['English', 'Maths', 'Science', 'SSt', 'Computer'],
+        '4': ['English', 'Maths', 'Science', 'SSt', 'Computer'],
+        '5': ['English', 'Maths', 'Science', 'SSt', 'Computer'],
+        '6': ['English', 'Maths', 'Science', 'SSt', 'Computer', 'GK'],
+        '9': ['English Language', 'English Literature', 'Hindi', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Computer Applications'],
+        '10': ['English Language', 'English Literature', 'Hindi', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Computer Applications']
+    };
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+    document.getElementById('loginForm').onsubmit = function(e){
+        e.preventDefault();
+        let uid = document.getElementById('uniqueid').value.trim();
+        let pwd = document.getElementById('rollno').value.trim();
 
+        // Case-insensitive match for ID and password
+        let student = students.find(s => s.uniqueId.toLowerCase() === uid.toLowerCase() && s.password.toLowerCase() === pwd.toLowerCase());
+
+        if(!student){
+            document.getElementById('errorMsg').textContent = 'Invalid ID or Roll Number, please try again.';
+            document.getElementById('errorMsg').style.display = 'block';
+            return;
+        }
+
+        document.getElementById('loginBox').classList.add('hidden');
+        document.getElementById('admitCardBox').classList.remove('hidden');
+        document.getElementById('admitName').textContent = student.name;
+        document.getElementById('admitClass').textContent = student.class;
+        document.getElementById('admitRoll').textContent = student.password;
+
+        // List subjects
+        let subjArr = subjects[student.class] || ['Subjects Not Available'];
+        let subjList = document.getElementById('subjectList');
+        subjList.innerHTML = '';
+        subjArr.forEach(subj => {
+            let li = document.createElement('li');
+            li.textContent = subj;
+            subjList.appendChild(li);
+        });
+    };
+    </script>
+</body>
+</html>
     /* Layout */
     header {
       position: sticky;
